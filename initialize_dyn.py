@@ -1,17 +1,81 @@
-from veros.core.operators import update, at, numpy as npx
-from veros.state import VerosState
-from veros import veros_routine
-from veris.variables import VARIABLES
-from veris.settings import SETTINGS
+import jax
+import jax.numpy as jnp
+from veris.variables import variables
+from veris.settings import settings
 
 
 grid_len = 128
 nx, ny = grid_len, grid_len
-olx, oly = 2, 2
+
+use_circular_overlap = True
+# use this to verify the correctness of the translation,
+# this (True) will produce the same result as the MITgcm.
+# use this only for single-process simulations
+if use_circular_overlap:
+    olx, oly = 2, 2
+else:
+    olx, oly = 0, 0
+
+
+##### create state objects containing all variables and settings #####
+
+class StateObject:
+    def __init__(self, dict_in):
+        # this copies the dictionary, with each key of the dictionary being
+        # an attribute of the class
+        for key, var in dict_in.items():
+            setattr(self, key, var)
+
+    def add(self, dict_in):
+        # allows adding more dictionaries after init
+        for key, var in dict_in.items():
+            setattr(self, key, var)
+
+    def tree_flatten(self):
+        # returns the leaf values (the values that are contained in
+        # the keys of self) and their keys
+        leaf_values = []
+        leaf_keys = []
+        # self.__dict__ returns a dictionary containing the variables of self,
+        # sorted() of a dictionary returns the sorted keys
+        for key in sorted(self.__dict__):
+            val = getattr(self, key)
+            leaf_values.append(val)
+            leaf_keys.append(key)
+        return leaf_values, leaf_keys
+
+    @classmethod
+    def tree_unflatten(cls, leaf_keys, leaf_values):
+        # creates an instance of StateObject based on leaf_keys and leaf_values
+        obj = cls({})
+        for key, val in zip(leaf_keys, leaf_values):
+            setattr(obj, key, val)
+        return obj
+
+# only after registering the flatten and unflatten methods of the StateObject
+# class with the jax pytree system, jax knows how to flatten/ unflatten a
+# StateObject instance, which is necessary for using jax's automatic differentiation
+# and parallelization features on such an instance (in general, it is necessary
+# for using a jax-compiled function on such an instance)
+jax.tree_util.register_pytree_node(
+    StateObject,
+    StateObject.tree_flatten,
+    StateObject.tree_unflatten
+)
+
+# initialize all variables to the right size and fill them with 0
+zeros2d = jnp.zeros((grid_len+2*olx, grid_len+2*oly))
+for key in variables:
+    variables[key] = zeros2d
+
+# creating two state objects like this allows for accessing the variables and
+# settings in a way that is compatible with the Veros syntax (like vs.uIce, sett.useEVP)
+vs = StateObject(variables)
+sett = StateObject(settings)
 
 
 ##### create wind and ocean surface currents (and initial
-    # sea ice thickness) similar to the Mehlmann benchmark #####
+    # sea ice thickness) similar to the Mehlmann 21 benchmark #####
 
 Lx=512e3
 Ly=Lx
@@ -22,17 +86,17 @@ f0=1.4e-4
 gravity=9.81
 Ho=1000
 accuracy='float64'
-x = (npx.arange(nx,dtype = accuracy)+0.5)*dx;
-y = (npx.arange(ny,dtype = accuracy)+0.5)*dy;
-xx,yy = npx.meshgrid(x,y);
-xu,yu = npx.meshgrid(x-.5*dx,y);
-xv,yv = npx.meshgrid(x,y-.5*dy);
+x = (jnp.arange(nx,dtype = accuracy)+0.5)*dx;
+y = (jnp.arange(ny,dtype = accuracy)+0.5)*dy;
+xx,yy = jnp.meshgrid(x,y);
+xu,yu = jnp.meshgrid(x-.5*dx,y);
+xv,yv = jnp.meshgrid(x,y-.5*dy);
 
 # Flat bottom at z=-Ho
-h=-Ho*npx.ones((ny,nx),dtype = accuracy);
+h=-Ho*jnp.ones((ny,nx),dtype = accuracy);
 # channnel walls
-h = update(h, at[:,-1], 0);
-h = update(h, at[-1,:], 0);
+h = h.at[:,-1].set(0)
+h = h.at[-1,:].set(0)
 
 variableWindField = True
 shiftWindField = True
@@ -41,7 +105,7 @@ if variableWindField:
     period = 16 # days
     if shiftWindField: period = 4 # days
     writeFreq = 3 # hours
-    t = npx.arange(0,period*24/writeFreq)/(24./writeFreq) # time in days
+    t = jnp.arange(0,period*24/writeFreq)/(24./writeFreq) # time in days
     vmax = 15.0; # maximale windgeschwindigkeit in m/s
 
     if shiftWindField:
@@ -49,7 +113,7 @@ if variableWindField:
         mx = Lx*.1 + Lx*.1*t
         my = Ly*.1 + Ly*.1*t
     else:
-        tP=npx.mod(t,period/2)
+        tP=jnp.mod(t,period/2)
         tP[t>=period/2.]=period/2.-tP[t>=period/2.]
         tP = tP/(0.5*period)
         oLx=150.e3
@@ -57,91 +121,95 @@ if variableWindField:
         mx = -oLx+(2*oLx+Lx)*tP
         my = -oLy+(2*oLy+Ly)*tP
 
-    alpha0= npx.pi/2. - npx.pi/2./5. # 90 grad ist ohne Konvergenz oder Divergenz
-    alpha = npx.pi/2. - npx.pi/2./5.*npx.maximum(npx.sign(npx.roll(mx,-1)-mx),0.) \
-            -npx.pi/2./10.*npx.maximum(npx.sign(mx-npx.roll(mx,-1)),0.)
+    alpha0= jnp.pi/2. - jnp.pi/2./5. # 90 grad ist ohne Konvergenz oder Divergenz
+    alpha = jnp.pi/2. - jnp.pi/2./5.*jnp.maximum(jnp.sign(jnp.roll(mx,-1)-mx),0.) \
+            -jnp.pi/2./10.*jnp.maximum(jnp.sign(mx-jnp.roll(mx,-1)),0.)
 
-    uwind = npx.zeros((t.shape[0],xx.shape[0],xx.shape[1]))
-    vwind = npx.zeros((t.shape[0],yy.shape[0],yy.shape[1]))
+    uwind = jnp.zeros((t.shape[0],xx.shape[0],xx.shape[1]))
+    vwind = jnp.zeros((t.shape[0],yy.shape[0],yy.shape[1]))
     for k,myt in enumerate(t):
-        wx =  npx.cos(alpha[k])*(xx-mx[k]) + npx.sin(alpha[k])*(yy-my[k])
-        wy = -npx.sin(alpha[k])*(xx-mx[k]) + npx.cos(alpha[k])*(yy-my[k])
-        r = npx.sqrt((mx[k]-xx)*(mx[k]-xx)+(my[k]-yy)*(my[k]-yy))
-        s = 1.0/50.e3*npx.exp(-r/100.e3)
+        wx =  jnp.cos(alpha[k])*(xx-mx[k]) + jnp.sin(alpha[k])*(yy-my[k])
+        wy = -jnp.sin(alpha[k])*(xx-mx[k]) + jnp.cos(alpha[k])*(yy-my[k])
+        r = jnp.sqrt((mx[k]-xx)*(mx[k]-xx)+(my[k]-yy)*(my[k]-yy))
+        s = 1.0/50.e3*jnp.exp(-r/100.e3)
         if shiftWindField:
-            w = npx.tanh(myt*(8.0-myt)/2.)
+            w = jnp.tanh(myt*(8.0-myt)/2.)
         else:
             if myt<8:
-                w = npx.tanh(myt*(period/2.-myt)/2.)
+                w = jnp.tanh(myt*(period/2.-myt)/2.)
             elif myt>=8 and myt<16:
-                w = -npx.tanh((myt-period/2.)*(period-myt)/2.)
+                w = -jnp.tanh((myt-period/2.)*(period-myt)/2.)
         #    w = np.sin(2.0*np.pi*myt/period)
 
         # reset scaling factor w to one
         w = 1.
-        uwind = update(uwind, at[k,:,:], -wx*s*w*vmax);
-        vwind = update(vwind, at[k,:,:], -wy*s*w*vmax);
+        uwind = uwind.at[k,:,:].set(-wx*s*w*vmax)
+        vwind = vwind.at[k,:,:].set(-wy*s*w*vmax)
 
-        spd=npx.sqrt(uwind[k,:,:]**2+vwind[k,:,:]**2)
+        spd=jnp.sqrt(uwind[k,:,:]**2+vwind[k,:,:]**2)
         div=uwind[k,1:-1,2:]-uwind[k,1:-1,:-2] \
              +vwind[k,2:,1:-1]-vwind[k,:-2,1:-1]
 
-# ocean
+# ocean surface velocity
 uo = +0.01*(2*yy-Ly)/Ly
 vo = -0.01*(2*xx-Lx)/Lx
 
-# initial thickness:
-hice = 0.3 + 0.005*npx.sin(500*xx) + 0.005*npx.sin(500*yy)
+# initial ice thickness
+hice = 0.3 + 0.005*jnp.sin(500*xx) + 0.005*jnp.sin(500*yy)
 # symmetrize
 hices = 0.5*(hice + hice.transpose())
-# initial thickness for comparison with:
-hice = 0.3 + 0.005*(npx.sin(60./1000.e3*xx) + npx.sin(30./1000.e3*yy))
+# initial ice thickness for comparison with Mehlmann 21
+hice = 0.3 + 0.005*(jnp.sin(60./1000.e3*xx) + jnp.sin(30./1000.e3*yy))
+# symmetrize
+hices = 0.5*(hice + hice.transpose())
 
 
-##### create fields with overlap, also define grid and masks #####
+##### set intial conditions, grid, masks, and local settings #####
 
-def fill_overlap(A):
-        A = update(A, at[:2, :], A[-4:-2, :])
-        A = update(A, at[-2:, :], A[2:4, :])
-        A = update(A, at[:, :2], A[:, -4:-2])
-        A = update(A, at[:, -2:], A[:, 2:4])
+ones2d = jnp.ones((grid_len+2*olx, grid_len+2*oly))
 
-        return A
+def fill_overlap_loc(A):
+    if use_circular_overlap:
+        A = A.at[:2, :].set(A[-4:-2, :])
+        A = A.at[-2:, :].set(A[2:4, :])
+        A = A.at[:, :2].set(A[:, -4:-2])
+        A = A.at[:, -2:].set(A[:, 2:4])
 
-ones2d = npx.ones((grid_len+4,grid_len+4))
+    return A
 
-def create(val):
-    return ones2d * val
+def createfrom(inner_field):
+    if use_circular_overlap:
+        # this returns a field that is 2 grid cells in each direction larger than
+        # inner_field, with these additional grid cells filled as circular overlaps
+        field = ones2d
+    
+        field = field.at[2:-2,2:-2].set(inner_field)
+        field = fill_overlap_loc(field)
+        return field
+    else:
+        return inner_field
 
-def createfrom(field):
-    field_full_size = ones2d * 1
-    field_full_size = update(field_full_size, at[2:-2,2:-2], field)
-    field_full_size = fill_overlap(field_full_size)
-    return field_full_size
+def set_inits(vs):
+    # set initial conditions and define grid and masks
 
-
-@veros_routine
-def set_inits(state):
-    vs = state.variables
-
-    #vs.hIceMean  = createfrom(hice)
-    hIceMean  = create(0.3)
-    hSnowMean = create(0)
-    Area      = create(1)
-    TSurf     = create(273.0)
+    #hIceMean  = hice
+    hIceMean  = ones2d * 0.3
+    hSnowMean = ones2d * 0
+    Area      = ones2d * 1
+    TSurf     = ones2d * 273.0
     
     uWind  = createfrom(uwind[15,:,:])
     vWind  = createfrom(vwind[15,:,:])
     
-    maskInC = create(1)
-    maskInC = update(maskInC, at[-3,:], 0)
-    maskInC = update(maskInC, at[:,-3], 0)
-    maskInU = maskInC * npx.roll(maskInC,5,axis=1)
-    maskInV = maskInC * npx.roll(maskInC,5,axis=0)
-    
-    maskInC = fill_overlap(maskInC)
-    maskInU = fill_overlap(maskInU)
-    maskInV = fill_overlap(maskInV)
+    maskInC = ones2d * 1
+    maskInC = maskInC.at[-1-olx,:].set(0)
+    maskInC = maskInC.at[:,-1-oly].set(0)
+    maskInU = maskInC * jnp.roll(maskInC,1+2*olx,axis=1)
+    maskInV = maskInC * jnp.roll(maskInC,1+2*oly,axis=0)
+
+    maskInC = fill_overlap_loc(maskInC)
+    maskInU = fill_overlap_loc(maskInU)
+    maskInV = fill_overlap_loc(maskInV)
     
     uOcean = createfrom(uo) * maskInU
     vOcean = createfrom(vo) * maskInV
@@ -150,15 +218,15 @@ def set_inits(state):
 
     fcormax = 0.0001562
     fcormin = 0.00014604
-    y = npx.linspace(fcormin, fcormax, grid_len)
-    y = y[:,npx.newaxis] * npx.ones((grid_len,grid_len))
+    y = jnp.linspace(fcormin, fcormax, grid_len)
+    y = y[:,jnp.newaxis] * jnp.ones((grid_len,grid_len))
     fCori = createfrom(y)
-    #vs.fCori = create(1.46e-4)
-    fCori = create(0)
+    #fCori = createfrom(1.46e-4)
+    fCori = ones2d * 0
 
     iceMask, iceMaskU, iceMaskV  = maskInC, maskInU, maskInV
 
-    deltaX = create(8000)
+    deltaX = ones2d * 8000
     dxC, dyC, dxG, dyG, dxU, dyU, dxV, dyV = [deltaX for _ in range(8)]
     recip_dxC, recip_dyC, recip_dxG, recip_dyG, \
     recip_dxU, recip_dyU, recip_dxV, recip_dyV = [1 / deltaX for _ in range(8)]
@@ -180,7 +248,7 @@ def set_inits(state):
         rA, rAz, rAu, rAv, recip_rA, recip_rAz, recip_rAu, recip_rAv
     ]
 
-    fields = npx.array(fields).transpose(0,2,1)
+    fields = jnp.array(fields).transpose(0,2,1)
 
     (vs.hIceMean, vs.hSnowMean, vs.Area, vs.TSurf, vs.uOcean, vs.vOcean, vs.uWind, vs.vWind, vs.R_low,
     vs.maskInC, vs.maskInU, vs.maskInV, vs.iceMask, vs.iceMaskU, vs.iceMaskV, vs.fCori,
@@ -189,27 +257,27 @@ def set_inits(state):
     vs.rA, vs.rAz, vs.rAu, vs.rAv, vs.recip_rA, vs.recip_rAz, vs.recip_rAu, vs.recip_rAv
     ) = fields
 
+    return vs
 
-dimensions = dict(xt=nx, yt=ny)
-state = VerosState(VARIABLES, SETTINGS, dimensions)
-state.initialize_variables()
-set_inits(state)
+# set initial conditions, grid and masks
+vs = set_inits(vs)
 
+# use these settings for the benchmark
 deltat = 3600
 input_settings = {
-            'deltatTherm'       : deltat,
-            'recip_deltatTherm' : 1 / deltat,
-            'deltatDyn'         : deltat,
-            'recip_deltatDyn'   : 1 / deltat,
-            'gridcellWidth'     : 8000,
-            'veros_fill'        : False,
-            'useEVP'            : True,
-            'useAdaptiveEVP'    : True,
-            'useRelativeWind'   : False,
-            'evpAlpha'          : 123456.7,
-            'evpBeta'           : 123456.7,
-            'nEVPsteps'         : 400
+            'deltatTherm'          : deltat,
+            'recip_deltatTherm'    : 1 / deltat,
+            'deltatDyn'            : deltat,
+            'recip_deltatDyn'      : 1 / deltat,
+            'gridcellWidth'        : 8000,
+            'use_circular_overlap' : use_circular_overlap,
+            'veros_fill'           : False,
+            'useEVP'               : True,
+            'useFreedrift'         : False,
+            'useAdaptiveEVP'       : True,
+            'useRelativeWind'      : False,
+            'evpAlpha'             : 123456.7,
+            'evpBeta'              : 123456.7,
+            'nEVPsteps'            : 400,
         }
-
-with state.settings.unlock():
-    state.settings.update(input_settings)
+sett.add(input_settings)
