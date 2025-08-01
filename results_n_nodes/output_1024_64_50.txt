@@ -1,0 +1,417 @@
+time for imports and jax initialization:  14.909189714002423
+time for setting up sharding:  14.497080318047665
+time for setting up halos:  11.00095647398848
+time for compilation:  4.82226745702792
+time for model run:  102.27034850104246
+time for finalizing:  172.1045209459262
+time for imports and jax initialization:  14.79276025807485
+time for setting up sharding:  14.631269087898545
+time for setting up halos:  10.997057134052739
+time for compilation:  4.8360375330084935
+time for model run:  102.25659730297048
+time for finalizing:  172.1025903050322
+time for imports and jax initialization:  14.727977670961991
+time for setting up sharding:  14.66815078095533
+time for setting up halos:  10.99973335606046
+time for compilation:  4.839850081014447
+time for model run:  102.25325379194692
+time for finalizing:  172.1038884749869
+time for imports and jax initialization:  14.663451771019027
+time for setting up sharding:  14.74568489100784
+time for setting up halos:  10.99996711697895
+time for compilation:  4.81814705603756
+time for model run:  102.27483020792715
+time for finalizing:  172.1039132680744
+time for imports and jax initialization:  14.793709489982575
+time for setting up sharding:  14.633679540012963
+time for setting up halos:  10.99665757699404
+time for compilation:  4.800143562955782
+time for model run:  102.29273102909792
+time for finalizing:  172.10297583893407
+time for imports and jax initialization:  14.602180900983512
+time for setting up sharding:  14.820529625983909
+time for setting up halos:  10.998698029085062
+time for compilation:  4.81715381401591
+time for model run:  102.27543865295593
+time for finalizing:  172.1035517459968
+time for imports and jax initialization:  14.992470867931843
+time for setting up sharding:  14.489346372080036
+time for setting up halos:  10.991792265907861
+time for compilation:  4.813427524990402
+time for model run:  102.27940697700251
+time for finalizing:  172.10595242702402
+time for imports and jax initialization:  14.729890726972371
+time for setting up sharding:  14.71159258496482
+time for setting up halos:  11.045816051075235
+time for compilation:  4.819753199000843
+time for model run:  102.27321317000315
+time for finalizing:  172.10545869299676
+time for imports and jax initialization:  14.691721998970024
+time for setting up sharding:  14.699360017082654
+time for setting up halos:  11.002895110985264
+time for compilation:  4.803251332952641
+time for model run:  102.28929704194888
+time for finalizing:  172.10393052606378
+time for imports and jax initialization:  14.472906430950388
+time for setting up sharding:  14.970220006071031
+time for setting up halos:  11.042309664888307
+time for compilation:  4.827926988014951
+time for model run:  102.26507845590822
+time for finalizing:  172.1055138821248
+time for imports and jax initialization:  14.542560638976283
+time for setting up sharding:  14.870975660043769
+time for setting up halos:  11.007101504947059
+time for compilation:  4.816770925070159
+time for model run:  102.27620569197461
+time for finalizing:  172.10343681101222
+time for imports and jax initialization:  14.84219297207892
+time for setting up sharding:  14.606057979981415
+time for setting up halos:  11.054476083954796
+time for compilation:  4.837315344018862
+time for model run:  102.25603751395829
+time for finalizing:  172.10587503609713
+time for imports and jax initialization:  14.796043760026805
+time for setting up sharding:  14.638851911993697
+time for setting up halos:  11.047738327994011
+time for compilation:  4.81722039100714
+time for model run:  102.27584055799525
+time for finalizing:  172.1056184999179
+time for imports and jax initialization:  14.800290161045268
+time for setting up sharding:  14.61762093694415
+time for setting up halos:  10.990759673994035
+time for compilation:  4.827458940097131
+time for model run:  102.2655620869482
+time for finalizing:  172.106028498034
+time for imports and jax initialization:  14.634185247006826
+time for setting up sharding:  14.808815394062549
+time for setting up halos:  11.02746341493912
+time for compilation:  4.800460407976061
+time for model run:  102.29244284203742
+time for finalizing:  172.1062453649938
+time for imports and jax initialization:  14.845400903956033
+time for setting up sharding:  14.594220078084618
+time for setting up halos:  11.030801653978415
+time for compilation:  4.826661733910441
+time for model run:  102.26635122403968
+time for finalizing:  172.106503852061
+time for imports and jax initialization:  14.766339443973266
+time for setting up sharding:  14.680057016084902
+time for setting up halos:  10.990120470989496
+time for compilation:  4.817581748939119
+time for model run:  102.27532759599853
+time for finalizing:  172.10665353399236
+time for imports and jax initialization:  14.689778481028043
+time for setting up sharding:  14.731074325973168
+time for setting up halos:  10.992762834066525
+time for compilation:  4.839618508005515
+time for model run:  102.25321794394404
+time for finalizing:  172.107024427969
+time for imports and jax initialization:  14.683223083033226
+time for setting up sharding:  14.740215088007972
+time for setting up halos:  11.034338405937888
+time for compilation:  4.812257356010377
+time for model run:  102.28078966098838
+time for finalizing:  172.1069876139518
+time for imports and jax initialization:  14.81115222396329
+time for setting up sharding:  14.669511434040032
+time for setting up halos:  10.992923459038138
+time for compilation:  4.830671808915213
+time for model run:  102.26226880704053
+time for finalizing:  172.1074359259801
+time for imports and jax initialization:  14.837735801003873
+time for setting up sharding:  14.601176733034663
+time for setting up halos:  11.061803222051822
+time for compilation:  4.807791681960225
+time for model run:  102.28549869603012
+time for finalizing:  172.10839161695912
+time for imports and jax initialization:  14.710512306075543
+time for setting up sharding:  14.733188283978961
+time for setting up halos:  10.994644552003592
+time for compilation:  4.815075246966444
+time for model run:  102.2778410690371
+time for finalizing:  172.10769355192315
+time for imports and jax initialization:  14.768575059017166
+time for setting up sharding:  14.650517761940137
+time for setting up halos:  10.995654881000519
+time for compilation:  4.810679523972794
+time for model run:  102.28242409799714
+time for finalizing:  172.10786625405308
+time for imports and jax initialization:  14.682554372004233
+time for setting up sharding:  14.743768129963428
+time for setting up halos:  10.989454180933535
+time for compilation:  4.7999619980109856
+time for model run:  102.29311701306142
+time for finalizing:  172.10732181498315
+time for imports and jax initialization:  14.781515746959485
+time for setting up sharding:  14.665838847053237
+time for setting up halos:  11.060202675987966
+time for compilation:  4.811375509947538
+time for model run:  102.2818018461112
+time for finalizing:  172.10897244897205
+time for imports and jax initialization:  14.703067542053759
+time for setting up sharding:  14.734580741962418
+time for setting up halos:  11.064580437960103
+time for compilation:  4.8275129810208455
+time for model run:  102.26565077295527
+time for finalizing:  172.1091325180605
+time for imports and jax initialization:  14.573318141046911
+time for setting up sharding:  14.891064058989286
+time for setting up halos:  11.024674138985574
+time for compilation:  4.814893385977484
+time for model run:  102.2780299950391
+time for finalizing:  172.10928565997165
+time for imports and jax initialization:  14.406588508980349
+time for setting up sharding:  15.045295368996449
+time for setting up halos:  11.055164358927868
+time for compilation:  4.819014401058666
+time for model run:  102.27422832499724
+time for finalizing:  172.10890523903072
+time for imports and jax initialization:  14.69038357399404
+time for setting up sharding:  14.770316828973591
+time for setting up halos:  11.036093618022278
+time for compilation:  4.829090590937994
+time for model run:  102.2641797310207
+time for finalizing:  172.1062240069732
+time for imports and jax initialization:  14.73364729702007
+time for setting up sharding:  14.73108413896989
+time for setting up halos:  11.060187628958374
+time for compilation:  4.820969491964206
+time for model run:  102.2722104981076
+time for finalizing:  172.1096837159712
+time for imports and jax initialization:  14.640579249011353
+time for setting up sharding:  14.833088075043634
+time for setting up halos:  11.03311310603749
+time for compilation:  4.818843949935399
+time for model run:  102.2740118720103
+time for finalizing:  172.1095747060608
+time for imports and jax initialization:  14.828728215070441
+time for setting up sharding:  14.619825340923853
+time for setting up halos:  11.05060423410032
+time for compilation:  4.836556416936219
+time for model run:  102.25676617096178
+time for finalizing:  172.10944866610225
+time for imports and jax initialization:  14.5977480399888
+time for setting up sharding:  14.869611730915494
+time for setting up halos:  11.036999718053266
+time for compilation:  4.813546604011208
+time for model run:  102.27955362794455
+time for finalizing:  172.1097411790397
+time for imports and jax initialization:  14.836698803934269
+time for setting up sharding:  14.6423640770372
+time for setting up halos:  11.01575657504145
+time for compilation:  4.825637945905328
+time for model run:  102.26724320510402
+time for finalizing:  172.1102355059702
+time for imports and jax initialization:  14.657067926018499
+time for setting up sharding:  14.782946132007055
+time for setting up halos:  10.989686054061167
+time for compilation:  4.826149761909619
+time for model run:  102.26693626004271
+time for finalizing:  172.11006473505404
+time for imports and jax initialization:  14.758480055024847
+time for setting up sharding:  14.717542033991776
+time for setting up halos:  11.028942319913767
+time for compilation:  4.839398718089797
+time for model run:  102.25341861601919
+time for finalizing:  172.1095200139098
+time for imports and jax initialization:  14.604238681029528
+time for setting up sharding:  14.940477193915285
+time for setting up halos:  11.011526025016792
+time for compilation:  4.822401880985126
+time for model run:  102.27057825098746
+time for finalizing:  172.1104659870034
+time for imports and jax initialization:  14.682565766037442
+time for setting up sharding:  14.765893924981356
+time for setting up halos:  11.056261930032633
+time for compilation:  4.806890918989666
+time for model run:  102.28623240091838
+time for finalizing:  172.11028224008624
+time for imports and jax initialization:  14.790953353978693
+time for setting up sharding:  14.66161332000047
+time for setting up halos:  11.04674847703427
+time for compilation:  4.842404691036791
+time for model run:  102.25065617798828
+time for finalizing:  172.11036279599648
+time for imports and jax initialization:  14.711553256958723
+time for setting up sharding:  14.766193401999772
+time for setting up halos:  10.989327239105478
+time for compilation:  4.820373893948272
+time for model run:  102.27275542798452
+time for finalizing:  172.11026640201453
+time for imports and jax initialization:  14.680658266064711
+time for setting up sharding:  14.768339718924835
+time for setting up halos:  10.989899439970031
+time for compilation:  4.802278217044659
+time for model run:  102.29068036098033
+time for finalizing:  172.11079463700298
+time for imports and jax initialization:  15.09671720804181
+time for setting up sharding:  14.40676686691586
+time for setting up halos:  11.0421568719903
+time for compilation:  4.817511178087443
+time for model run:  102.27533275191672
+time for finalizing:  172.1108683180064
+time for imports and jax initialization:  14.870030055986717
+time for setting up sharding:  14.565882914001122
+time for setting up halos:  11.0151768369833
+time for compilation:  4.841672998969443
+time for model run:  102.25155094405636
+time for finalizing:  172.11047141696326
+time for imports and jax initialization:  14.894949028966948
+time for setting up sharding:  14.584564368939027
+time for setting up halos:  10.98885477904696
+time for compilation:  4.812866857973859
+time for model run:  102.28019651107024
+time for finalizing:  172.11067232093774
+time for imports and jax initialization:  14.692797835101373
+time for setting up sharding:  14.768823943915777
+time for setting up halos:  11.020059332018718
+time for compilation:  4.802026260062121
+time for model run:  102.29073323495686
+time for finalizing:  172.1101822879864
+time for imports and jax initialization:  14.779054435901344
+time for setting up sharding:  14.725897692027502
+time for setting up halos:  10.989308733958751
+time for compilation:  4.807593752047978
+time for model run:  102.2856767589692
+time for finalizing:  172.1108277430758
+time for imports and jax initialization:  14.714698591036722
+time for setting up sharding:  14.774963420000859
+time for setting up halos:  10.990374214015901
+time for compilation:  4.793106160941534
+time for model run:  102.30003056896385
+time for finalizing:  172.11096956010442
+time for imports and jax initialization:  14.569443476037122
+time for setting up sharding:  14.858105359016918
+time for setting up halos:  10.989574127015658
+time for compilation:  4.836115340003744
+time for model run:  102.25683565193322
+time for finalizing:  172.11144941207021
+time for imports and jax initialization:  14.81057984509971
+time for setting up sharding:  14.657288727001287
+time for setting up halos:  11.018805659958161
+time for compilation:  4.820651846006513
+time for model run:  102.27238502399996
+time for finalizing:  172.11171350604855
+time for imports and jax initialization:  14.738271479960531
+time for setting up sharding:  14.760741278994828
+time for setting up halos:  10.988934510038234
+time for compilation:  4.820572410942987
+time for model run:  102.27223797608167
+time for finalizing:  172.11139113095123
+time for imports and jax initialization:  14.675053123035468
+time for setting up sharding:  14.789398211985826
+time for setting up halos:  11.009003135026433
+time for compilation:  4.839526484021917
+time for model run:  102.25356978992932
+time for finalizing:  172.11157154710963
+time for imports and jax initialization:  14.579837007913738
+time for setting up sharding:  14.883899065083824
+time for setting up halos:  10.98990528495051
+time for compilation:  4.811662974068895
+time for model run:  102.28145398793276
+time for finalizing:  172.11200004804414
+time for imports and jax initialization:  14.814738145912997
+time for setting up sharding:  14.699909982038662
+time for setting up halos:  10.987747782026418
+time for compilation:  4.804051738930866
+time for model run:  102.2893842200283
+time for finalizing:  172.11128675204236
+time for imports and jax initialization:  14.822349900961854
+time for setting up sharding:  14.646292773075402
+time for setting up halos:  10.988531925017014
+time for compilation:  4.815627556992695
+time for model run:  102.27710208389908
+time for finalizing:  172.11179917806294
+time for imports and jax initialization:  14.681498244055547
+time for setting up sharding:  14.776963950949721
+time for setting up halos:  10.991266714059748
+time for compilation:  4.8072188349906355
+time for model run:  102.285538346041
+time for finalizing:  172.11159204598516
+time for imports and jax initialization:  14.795085672987625
+time for setting up sharding:  14.666548114037141
+time for setting up halos:  11.006533692940138
+time for compilation:  4.840123326983303
+time for model run:  102.2530408030143
+time for finalizing:  172.11182960798033
+time for imports and jax initialization:  14.705991253023967
+time for setting up sharding:  14.684751849039458
+time for setting up halos:  11.023248164914548
+time for compilation:  4.84423179703299
+time for model run:  102.24876069102902
+time for finalizing:  172.1124913590029
+time for imports and jax initialization:  14.517750416998751
+time for setting up sharding:  14.92912286601495
+time for setting up halos:  11.004313061013818
+time for compilation:  4.832007908029482
+time for model run:  102.26117799000349
+time for finalizing:  172.11280462192371
+time for imports and jax initialization:  14.512106635142118
+time for setting up sharding:  14.966146772028878
+time for setting up halos:  10.990168386837468
+time for compilation:  4.803686826955527
+time for model run:  102.28925823001191
+time for finalizing:  172.11289019300602
+time for imports and jax initialization:  14.847794913919643
+time for setting up sharding:  14.612028567120433
+time for setting up halos:  10.989766425918788
+time for compilation:  4.805058419005945
+time for model run:  102.28758230991662
+time for finalizing:  172.1130598441232
+time for imports and jax initialization:  14.62756564898882
+time for setting up sharding:  14.849047926953062
+time for setting up halos:  10.99628990702331
+time for compilation:  4.825452105957083
+time for model run:  102.26776735507883
+time for finalizing:  172.11295395798516
+time for imports and jax initialization:  14.474475527880713
+time for setting up sharding:  14.971291488967836
+time for setting up halos:  10.990006318083033
+time for compilation:  4.831142275128514
+time for model run:  102.26181243895553
+time for finalizing:  172.11354949185625
+time for imports and jax initialization:  14.77355495095253
+time for setting up sharding:  14.704152651014738
+time for setting up halos:  11.00038434099406
+time for compilation:  4.798357152030803
+time for model run:  102.29466246196534
+time for finalizing:  172.11351023602765
+time for imports and jax initialization:  14.433309174957685
+time for setting up sharding:  15.041442909045145
+time for setting up halos:  10.9913258330198
+time for compilation:  4.817362722940743
+time for model run:  102.27548628905788
+time for finalizing:  172.1122166409623
+
+********************************************************************************
+*                                                                              *
+*  This is the automated job summary provided by DKRZ.                         *
+*  If you encounter problems, need assistance or have any suggestion, please   *
+*  write an email to                                                           *
+*                                                                              *
+*  --  support@dkrz.de --                                                      *
+*                                                                              *
+*                       We hope you enjoyed the DKRZ supercomputer LEVANTE ... *
+*
+* JobID            : 18751657
+* JobName          : 1024_64_50.txt                                    
+* Account          : bk1377
+* User             : a270230 (275572), ab0995 (1221)                   
+* Partition        : compute
+* QOS              : normal
+* Nodelist         : l[10650-10662,10682-10690,10748,10755-10795] (64)         
+* Submit date      : 2025-07-30T23:27:49
+* Start time       : 2025-07-31T01:09:10
+* End time         : 2025-07-31T01:14:39
+* Elapsed time     : 00:05:29 (Timelimit=04:00:00)                     
+* Command          : /home/a/a270230/veris_minimum_working_example/run_files/
+*                    job_1024_64_50.sh
+* WorkDir          : /home/a/a270230/veris_minimum_working_example
+*
+* StepID | JobName      NodeHours    MaxRSS [Byte] (@task)
+* ------------------------------------------------------------------------------
+* 0      | python3            5.8            2621788K (53)
+* batch  | batch              5.8
+* extern | extern             5.8               2164K (61)
+* ------------------------------------------------------------------------------
+

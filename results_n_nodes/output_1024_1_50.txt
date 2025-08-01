@@ -1,0 +1,72 @@
+
+********************************************************************************
+*                                                                              *
+*  This is the automated job summary provided by DKRZ.                         *
+*  If you encounter problems, need assistance or have any suggestion, please   *
+*  write an email to                                                           *
+*                                                                              *
+*  --  support@dkrz.de --                                                      *
+*                                                                              *
+*                       We hope you enjoyed the DKRZ supercomputer LEVANTE ... *
+*
+* JobID            : 18751450
+* JobName          : 1024_1_50.txt                                     
+* Account          : bk1377
+* User             : a270230 (275572), ab0995 (1221)                   
+* Partition        : compute
+* QOS              : normal
+* Nodelist         : l20594 (1)                                                
+* Submit date      : 2025-07-30T23:10:56
+* Start time       : 2025-07-30T23:11:15
+* End time         : 2025-07-30T23:27:29
+* Elapsed time     : 00:16:14 (Timelimit=04:00:00)                     
+* Command          : /home/a/a270230/veris_minimum_working_example/run_files/
+*                    job_1024_1_50.sh
+* WorkDir          : /home/a/a270230/veris_minimum_working_example
+*
+* StepID | JobName      NodeHours    MaxRSS [Byte] (@task)
+* ------------------------------------------------------------------------------
+* 0      | python3           0.29             4865424K (0)
+* batch  | batch             0.27
+* extern | extern            0.29                2156K (0)
+* ------------------------------------------------------------------------------
+
+time for imports and jax initialization:  13.24040687805973
+time for setting up sharding:  0.009904421982355416
+time for setting up halos:  10.095722283003852
+time for compilation:  2.266588113969192
+time for model run:  775.212119136937
+time for finalizing:  1197.7087779700523
+
+********************************************************************************
+*                                                                              *
+*  This is the automated job summary provided by DKRZ.                         *
+*  If you encounter problems, need assistance or have any suggestion, please   *
+*  write an email to                                                           *
+*                                                                              *
+*  --  support@dkrz.de --                                                      *
+*                                                                              *
+*                       We hope you enjoyed the DKRZ supercomputer LEVANTE ... *
+*
+* JobID            : 18751652
+* JobName          : 1024_1_50.txt                                     
+* Account          : bk1377
+* User             : a270230 (275572), ab0995 (1221)                   
+* Partition        : compute
+* QOS              : normal
+* Nodelist         : l20647 (1)                                                
+* Submit date      : 2025-07-30T23:27:47
+* Start time       : 2025-07-30T23:27:52
+* End time         : 2025-07-31T00:01:16
+* Elapsed time     : 00:33:24 (Timelimit=04:00:00)                     
+* Command          : /home/a/a270230/veris_minimum_working_example/run_files/
+*                    job_1024_1_50.sh
+* WorkDir          : /home/a/a270230/veris_minimum_working_example
+*
+* StepID | JobName      NodeHours    MaxRSS [Byte] (@task)
+* ------------------------------------------------------------------------------
+* 0      | python3           0.56             4924948K (0)
+* batch  | batch             0.56
+* extern | extern            0.56                2156K (0)
+* ------------------------------------------------------------------------------
+
