@@ -4,10 +4,10 @@ from veris.variables import variables
 from veris.settings import settings
 
 
-grid_len = 128
+grid_len = 512
 nx, ny = grid_len, grid_len
 
-use_circular_overlap = True
+use_circular_overlap = False
 # use this to verify the correctness of the translation,
 # this (True) will produce the same result as the MITgcm.
 # use this only for single-process simulations
@@ -15,6 +15,8 @@ if use_circular_overlap:
     olx, oly = 2, 2
 else:
     olx, oly = 0, 0
+
+accuracy = 'float64'
 
 
 ##### create state objects containing all variables and settings #####
@@ -64,7 +66,7 @@ jax.tree_util.register_pytree_node(
 )
 
 # initialize all variables to the right size and fill them with 0
-zeros2d = jnp.zeros((grid_len+2*olx, grid_len+2*oly))
+zeros2d = jnp.zeros((grid_len+2*olx, grid_len+2*oly), dtype=accuracy)
 for key in variables:
     variables[key] = zeros2d
 
@@ -72,6 +74,8 @@ for key in variables:
 # settings in a way that is compatible with the Veros syntax (like vs.uIce, sett.useEVP)
 vs = StateObject(variables)
 sett = StateObject(settings)
+vs.add(variables)
+sett.add(settings)
 
 
 ##### create wind and ocean surface currents (and initial
@@ -85,7 +89,7 @@ dy = dx
 f0=1.4e-4
 gravity=9.81
 Ho=1000
-accuracy='float64'
+
 x = (jnp.arange(nx,dtype = accuracy)+0.5)*dx;
 y = (jnp.arange(ny,dtype = accuracy)+0.5)*dy;
 xx,yy = jnp.meshgrid(x,y);
@@ -166,7 +170,7 @@ hices = 0.5*(hice + hice.transpose())
 
 ##### set intial conditions, grid, masks, and local settings #####
 
-ones2d = jnp.ones((grid_len+2*olx, grid_len+2*oly))
+ones2d = jnp.ones((grid_len+2*olx, grid_len+2*oly), dtype=accuracy)
 
 def fill_overlap_loc(A):
     if use_circular_overlap:
