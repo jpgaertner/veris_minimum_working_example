@@ -1,10 +1,11 @@
 
-proc_grids=("(1, 1)" "(2, 2)" "(2, 4)" "(4, 4)" "(4, 8)" "(8, 8)")
+#proc_grids=("(1, 1)" "(2, 2)" "(2, 4)" "(4, 4)" "(4, 8)" "(8, 8)")
+proc_grids=("(1, 1)" "(2, 2)")
 grid_lens=(1024)
 n_timesteps=50
 
 # set processor type (compute for cpu or gpu for gpu)
-partition="compute"
+partition="gpu"
 
 # apply timesteps and processor type
 sed -i "s|\(n_timesteps = \).*|\1$n_timesteps|" run_parallel.py
@@ -29,20 +30,22 @@ for grid_len in "${grid_lens[@]}"; do
         cp run_parallel.py run_files/run_parallel_${grid_len}_${nproc}.py
 
         # set number of processors
-        sed -i "s|\(#SBATCH --nodes=\).*|\1$nproc|" job.sh
-        #sed -i "s|\(#SBATCH --nodes=\).*|\11|" job.sh
+        #sed -i "s|\(#SBATCH --nodes=\).*|\1$nproc|" job.sh
+        sed -i "s|\(#SBATCH --nodes=\).*|\11|" job.sh
         sed -i "s|\(#SBATCH --ntasks=\).*|\1$nproc|" job.sh
 
         # partitioning dependent syntax
         if [ "$partition" = "gpu" ]; then
           sed -i "8s|.*|#SBATCH --gpus-per-task=1|" job.sh
+          run="mpirun"
         else
           sed -i "8s|.*||" job.sh
+          run="srun --mpi=pmi2"
         fi
 
         # update names of output, the used run_parallel, and job
         sed -i "s|\(#SBATCH --output=results/output_\).*|\1${grid_len}_${nproc}_${n_timesteps}.txt|" job.sh
-        sed -i "s|\(srun --mpi=pmi2 \).*|\1python3 run_files/run_parallel_${grid_len}_${nproc}.py|" job.sh
+        sed -i "s|.*\(python3\).*|$run python3 run_files/run_parallel_${grid_len}_${nproc}.py|" job.sh
         sed -i "s|\(#SBATCH --job-name=\).*|\1${grid_len}_${nproc}_${n_timesteps}|" job.sh
 
 
