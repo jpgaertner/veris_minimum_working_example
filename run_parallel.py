@@ -24,7 +24,7 @@ from veris.ocean_stress import OceanStressUV
 from veris.advection import Advection
 from veris.clean_up import clean_up_advection, ridging
 from veris.fill_overlap import fill_overlap, fill_overlap_uv
-from initialize_dyn_512 import vs, sett
+from initialize_dyn_1024 import vs, sett
 
 t2 = perf_counter()
 
@@ -32,7 +32,7 @@ t2 = perf_counter()
 ##### set up sharding #####
 
 # define the dimensions of the processor mesh
-pdims = (8, 8)
+pdims = (2, 2)
 
 # create the processor mesh, where each device is identified by an index in the mesh
 mesh = jax.make_mesh(pdims, axis_names=('x', 'y'))
@@ -112,21 +112,12 @@ t4 = perf_counter()
 
 @partial(jax.jit)
 def loop_body(i, arg_body):
-
-    (
-        vs.uIce,
-        vs.vIce
-    ) = arg_body
+    vs.uIce, vs.vIce = arg_body
     
     vs.uIce = vs.uIce + vs.uOcean
-
     vs.uIce = fill_overlap(sett, vs.uIce)
 
-    arg_body = (
-        vs.uIce,
-        vs.vIce
-    )
-
+    arg_body = vs.uIce, vs.vIce
     return arg_body
 
 @partial(jax.jit, static_argnames=['sett'])
@@ -135,22 +126,11 @@ def loop_body(i, arg_body):
 # and its attributes (like useAdaptiveEVP) become part of the compiled function,
 # allowing for the control flow to be static (= determined at compile time)
 def test_model(vs, sett):
-    
     if sett.useAdaptiveEVP:
 
-        arg_body = (
-            vs.uIce,
-            vs.vIce
-        )
-
+        arg_body = vs.uIce, vs.vIce
         arg_body = fori_loop(0, 1, loop_body, arg_body)
-
-        (
-            vs.uIce,
-            vs.vIce
-        ) = arg_body
-    
-
+        vs.uIce, vs.vIce = arg_body
     return vs
 
 # veris without thermodynamics
@@ -211,7 +191,7 @@ for _ in range(3):
 
 t5 = perf_counter()
 
-n_timesteps = 100
+n_timesteps = 50
 for i in range(n_timesteps):
     vs = dyn_model(vs, sett)
 
