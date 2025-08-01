@@ -1,7 +1,7 @@
 
 proc_grids=("(1, 1)" "(2, 2)" "(2, 4)" "(4, 4)" "(4, 8)" "(8, 8)")
 grid_lens=(1024)
-n_timesteps=100
+n_timesteps=50
 
 # set processor type (compute for cpu or gpu for gpu)
 partition="compute"
