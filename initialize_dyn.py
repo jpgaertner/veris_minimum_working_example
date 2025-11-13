@@ -4,7 +4,7 @@ from veris.variables import variables
 from veris.settings import settings
 
 
-grid_len = 512
+grid_len = 256
 nx, ny = grid_len, grid_len
 
 use_circular_overlap = False
@@ -267,7 +267,7 @@ def set_inits(vs):
 vs = set_inits(vs)
 
 # use these settings for the benchmark
-deltat = 3600
+deltat = 600
 input_settings = {
             'deltatTherm'          : deltat,
             'recip_deltatTherm'    : 1 / deltat,
@@ -275,13 +275,12 @@ input_settings = {
             'recip_deltatDyn'      : 1 / deltat,
             'gridcellWidth'        : 8000,
             'use_circular_overlap' : use_circular_overlap,
-            'veros_fill'           : False,
             'useEVP'               : True,
             'useFreedrift'         : False,
             'useAdaptiveEVP'       : True,
             'useRelativeWind'      : False,
             'evpAlpha'             : 123456.7,
             'evpBeta'              : 123456.7,
-            'nEVPsteps'            : 400,
+            'nEVPsteps'            : 120,
         }
 sett.add(input_settings)
