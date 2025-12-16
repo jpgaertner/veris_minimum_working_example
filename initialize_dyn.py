@@ -4,13 +4,15 @@ from veris.variables import variables
 from veris.settings import settings
 
 
-grid_len = 256
+grid_len = 3072
 nx, ny = grid_len, grid_len
 
 use_circular_overlap = False
 # use this to verify the correctness of the translation,
 # this (True) will produce the same result as the MITgcm.
-# use this only for single-process simulations
+# use this only for single-process simulations.
+######## if you use this, you also have to set #
+# use_sharding = False in veris.settings #######
 if use_circular_overlap:
     olx, oly = 2, 2
 else:
@@ -23,8 +25,8 @@ accuracy = 'float64'
 
 class StateObject:
     def __init__(self, dict_in):
-        # this copies the dictionary, with each key of the dictionary being
-        # an attribute of the class
+        # copies the dictionary dict_int and creates an instance of StateObject,
+        # with each key of the dictionary being an attribute of the class
         for key, var in dict_in.items():
             setattr(self, key, var)
 
@@ -54,11 +56,9 @@ class StateObject:
             setattr(obj, key, val)
         return obj
 
-# only after registering the flatten and unflatten methods of the StateObject
-# class with the jax pytree system, jax knows how to flatten/ unflatten a
-# StateObject instance, which is necessary for using jax's automatic differentiation
-# and parallelization features on such an instance (in general, it is necessary
-# for using a jax-compiled function on such an instance)
+# register StateObject as a JAX pytree node so it can be used with jax.jit and
+# other transformation that require tree flattening. This allows a StateObject
+# instance to be passed into compiled functions and manipulated as a single unit
 jax.tree_util.register_pytree_node(
     StateObject,
     StateObject.tree_flatten,
@@ -70,12 +70,10 @@ zeros2d = jnp.zeros((grid_len+2*olx, grid_len+2*oly), dtype=accuracy)
 for key in variables:
     variables[key] = zeros2d
 
-# creating two state objects like this allows for accessing the variables and
-# settings in a way that is compatible with the Veros syntax (like vs.uIce, sett.useEVP)
+# create state objects for variables and settings, enabling access via dot
+# notation (e.g., vs.uIce, sett.useEVP); used in Veros-style syntax
 vs = StateObject(variables)
 sett = StateObject(settings)
-vs.add(variables)
-sett.add(settings)
 
 
 ##### create wind and ocean surface currents (and initial
@@ -173,6 +171,7 @@ hices = 0.5*(hice + hice.transpose())
 ones2d = jnp.ones((grid_len+2*olx, grid_len+2*oly), dtype=accuracy)
 
 def fill_overlap_loc(A):
+    # fill halo regions using circular overlap
     if use_circular_overlap:
         A = A.at[:2, :].set(A[-4:-2, :])
         A = A.at[-2:, :].set(A[2:4, :])
@@ -194,7 +193,8 @@ def createfrom(inner_field):
         return inner_field
 
 def set_inits(vs):
-    # set initial conditions and define grid and masks
+    # set initial conditions, grid and masks. this function
+    # populates the vs object with all required fields
 
     #hIceMean  = hice
     hIceMean  = ones2d * 0.3
