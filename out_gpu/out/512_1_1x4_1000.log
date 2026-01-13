@@ -1,0 +1,114 @@
+==============================================
+SLURM Job Information
+==============================================
+Job ID: 21973732
+Job name: 512_1x4
+Nodes: l50154
+Number of nodes: 1
+Tasks per node: 4
+Total tasks: 4
+CPUs per task: 32
+GPUs per node: 4
+Total GPUs: 4
+Start time: Di 13. Jan 15:48:53 CET 2026
+==============================================
+
+JAX Distributed Configuration:
+  Coordinator: l50154:12345
+  Total processes: 4
+
+Running script: run_files/run_parallel_gpu_512_1x4.py
+
+
+======================================================================
+  benchmark results on device 3
+======================================================================
+
+time for imports and jax initialization: 12.670149109791964
+time for setting up sharding: 1.833672730019316
+time for setting up halos: 17.276626080973074
+time for compilation: 2.6576615541707724
+time for model run: 40.52259589894675
+time for finalizing: 15.208656653994694
+
+======================================================================
+  benchmark results on device 1
+======================================================================
+
+time for imports and jax initialization: 12.725571410963312
+time for setting up sharding: 1.7781253270804882
+time for setting up halos: 17.276745571987703
+time for compilation: 2.6576028938870877
+time for model run: 40.522600488970056
+time for finalizing: 15.208323311060667
+
+======================================================================
+  configuration
+======================================================================
+
+device 0: gpu
+device 1: gpu
+device 2: gpu
+device 3: gpu
+number of iterations in model run:  1000
+grid length:  512
+
+======================================================================
+  benchmark results on device 0
+======================================================================
+
+time for imports and jax initialization: 12.680093033006415
+time for setting up sharding: 1.8226068299263716
+time for setting up halos: 17.27686278312467
+time for compilation: 2.65846250904724
+time for model run: 40.52256377786398
+time for finalizing: 15.208593923132867
+
+======================================================================
+  benchmark results on device 2
+======================================================================
+
+time for imports and jax initialization: 12.721830591093749
+time for setting up sharding: 1.7822052498813719
+time for setting up halos: 17.27650883118622
+time for compilation: 2.6576381230261177
+time for model run: 40.52248586784117
+time for finalizing: 15.20842075208202
+
+==============================================
+Job completed with exit code: 0
+End time: Di 13. Jan 15:50:27 CET 2026
+==============================================
+
+********************************************************************************
+*                                                                              *
+*  This is the automated job summary provided by DKRZ.                         *
+*  If you encounter problems, need assistance or have any suggestion, please   *
+*  write an email to                                                           *
+*                                                                              *
+*  --  support@dkrz.de --                                                      *
+*                                                                              *
+*                       We hope you enjoyed the DKRZ supercomputer LEVANTE ... *
+*
+* JobID            : 21973732
+* JobName          : 512_1x4                                           
+* Account          : bk1377_gpu
+* User             : a270230 (275572), ab0995 (1221)                   
+* Partition        : gpu
+* QOS              : normal
+* Nodelist         : l50154 (1)                                                
+* Submit date      : 2026-01-13T15:48:10
+* Start time       : 2026-01-13T15:48:50
+* End time         : 2026-01-13T15:50:27
+* Elapsed time     : 00:01:37 (Timelimit=00:10:00)                     
+* Command          : /home/a/a270230/veris_paper/veris_minimum_working_example/
+*                    run_files/job_gpu_512_1x4.sh
+* WorkDir          : /home/a/a270230/veris_paper/veris_minimum_working_example
+*
+* StepID | JobName      NodeHours    MaxRSS [Byte] (@task)
+* ------------------------------------------------------------------------------
+* 0      | python           0.026             1384748K (0)
+* batch  | batch            0.027
+* extern | extern           0.027                3824K (0)
+* ------------------------------------------------------------------------------
+

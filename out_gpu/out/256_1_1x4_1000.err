@@ -1,0 +1,24 @@
+W0113 15:50:18.201451 2563861 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugonly   job_name: "jax_worker" task_id: 3: CANCELLED: CANCELLED
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_status:1, grpc_message:"CANCELLED"} [type.googleapis.com/tensorflow.DerivedStatus='']
+W0113 15:50:18.201572 2563864 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugproto    job_name: "jax_worker" task_id: 2: UNAVAILABLE: failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused"}
+W0113 15:50:18.201694 2563862 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugproto    job_name: "jax_worker": UNAVAILABLE: failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused", grpc_status:14}
+W0113 15:50:18.201716 2563863 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugproto  job_name: "jax_worker" task_id: 1: UNAVAILABLE: failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused", grpc_status:14}
+W0113 15:50:19.201989 2563864 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugproto    job_name: "jax_worker" task_id: 2: UNAVAILABLE: failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused"}
+W0113 15:50:19.202214 2563861 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugonly   job_name: "jax_worker" task_id: 3: UNAVAILABLE: failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused", grpc_status:14}
+W0113 15:50:19.202232 2563863 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugproto  job_name: "jax_worker" task_id: 1: UNAVAILABLE: failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused", grpc_status:14}
+W0113 15:50:19.202272 2563862 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugproto    job_name: "jax_worker": UNAVAILABLE: failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.39:12345: Failed to connect to remote host: Connection refused", grpc_status:14}

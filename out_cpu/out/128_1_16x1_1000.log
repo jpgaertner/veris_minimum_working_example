@@ -1,0 +1,261 @@
+==============================================
+SLURM Job Information
+==============================================
+Job ID: 21973711
+Job name: 128_16x1
+Nodes: l40095
+Number of nodes: 1
+Tasks per node: 16
+Total tasks: 16
+CPUs per task: 8
+Start time: Di 13. Jan 15:47:27 CET 2026
+==============================================
+
+[Gloo] Rank 3 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 8 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 4 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 13 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 0 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 1 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 5 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 2 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 6 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 7 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 9 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 10 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 11 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 12 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 14 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+[Gloo] Rank 15 is connected to 15 peer ranks. Expected number of connected peer ranks is : 15
+
+======================================================================
+  benchmark results on device 5
+======================================================================
+
+time for imports and jax initialization: 10.084793428890407
+time for setting up sharding: 0.381703688763082
+time for setting up halos: 13.662104507908225
+time for compilation: 1.6654620943590999
+time for model run: 172.1144032496959
+time for finalizing: 12.12235561478883
+
+======================================================================
+  benchmark results on device 14
+======================================================================
+
+time for imports and jax initialization: 10.090259061194956
+time for setting up sharding: 0.3764785686507821
+time for setting up halos: 13.663855076767504
+time for compilation: 1.6635542456060648
+time for model run: 172.11432370636612
+time for finalizing: 12.122207544744015
+
+======================================================================
+  benchmark results on device 2
+======================================================================
+
+time for imports and jax initialization: 10.080180637538433
+time for setting up sharding: 0.3863418288528919
+time for setting up halos: 13.664236802607775
+time for compilation: 1.6635328941047192
+time for model run: 172.11438807751983
+time for finalizing: 12.122270314954221
+
+======================================================================
+  benchmark results on device 11
+======================================================================
+
+time for imports and jax initialization: 10.08512837253511
+time for setting up sharding: 0.3816235875710845
+time for setting up halos: 13.662404931150377
+time for compilation: 1.6649411898106337
+time for model run: 172.11420588660985
+time for finalizing: 12.12232730537653
+
+======================================================================
+  benchmark results on device 15
+======================================================================
+
+time for imports and jax initialization: 10.08426755387336
+time for setting up sharding: 0.3825931865721941
+time for setting up halos: 13.66393418982625
+time for compilation: 1.6635224940255284
+time for model run: 172.1143434373662
+time for finalizing: 12.122219303622842
+
+======================================================================
+  benchmark results on device 6
+======================================================================
+
+time for imports and jax initialization: 10.076694299466908
+time for setting up sharding: 0.38983098790049553
+time for setting up halos: 13.663982800208032
+time for compilation: 1.663531613536179
+time for model run: 172.1143804481253
+time for finalizing: 12.122354105114937
+
+======================================================================
+  benchmark results on device 10
+======================================================================
+
+time for imports and jax initialization: 10.090421591885388
+time for setting up sharding: 0.3762336177751422
+time for setting up halos: 13.663852827623487
+time for compilation: 1.663551683537662
+time for model run: 172.1142648179084
+time for finalizing: 12.12226951494813
+
+======================================================================
+  benchmark results on device 12
+======================================================================
+
+time for imports and jax initialization: 10.067411744967103
+time for setting up sharding: 0.3995988965034485
+time for setting up halos: 13.662339691072702
+time for compilation: 1.6649425402283669
+time for model run: 172.1142509970814
+time for finalizing: 12.12231617514044
+
+======================================================================
+  benchmark results on device 9
+======================================================================
+
+time for imports and jax initialization: 10.07844427973032
+time for setting up sharding: 0.38845141138881445
+time for setting up halos: 13.663928689435124
+time for compilation: 1.663513463921845
+time for model run: 172.1143028670922
+time for finalizing: 12.122271754778922
+
+======================================================================
+  benchmark results on device 7
+======================================================================
+
+time for imports and jax initialization: 10.096532131545246
+time for setting up sharding: 0.3700494971126318
+time for setting up halos: 13.663933188654482
+time for compilation: 1.663542853668332
+time for model run: 172.1143192080781
+time for finalizing: 12.122312013991177
+
+======================================================================
+  configuration
+======================================================================
+
+device 0: cpu
+device 2048: cpu
+device 4096: cpu
+device 6144: cpu
+device 8192: cpu
+device 10240: cpu
+device 12288: cpu
+device 14336: cpu
+device 16384: cpu
+device 18432: cpu
+device 20480: cpu
+device 22528: cpu
+device 24576: cpu
+device 26624: cpu
+device 28672: cpu
+device 30720: cpu
+number of iterations in model run:  1000
+grid length:  128
+
+======================================================================
+  benchmark results on device 0
+======================================================================
+
+time for imports and jax initialization: 10.082767257466912
+time for setting up sharding: 0.3840259928256273
+time for setting up halos: 13.664023430086672
+time for compilation: 1.6635156236588955
+time for model run: 172.11435379832983
+time for finalizing: 12.122238583862782
+
+======================================================================
+  benchmark results on device 3
+======================================================================
+
+time for imports and jax initialization: 10.07749932911247
+time for setting up sharding: 0.3888927772641182
+time for setting up halos: 13.662839006632566
+time for compilation: 1.6648683091625571
+time for model run: 172.11442983802408
+time for finalizing: 12.122296604327857
+
+======================================================================
+  benchmark results on device 1
+======================================================================
+
+time for imports and jax initialization: 10.074668436311185
+time for setting up sharding: 0.3917260095477104
+time for setting up halos: 13.664208041504025
+time for compilation: 1.663533104583621
+time for model run: 172.1143644778058
+time for finalizing: 12.12223978433758
+
+======================================================================
+  benchmark results on device 8
+======================================================================
+
+time for imports and jax initialization: 10.087127346545458
+time for setting up sharding: 0.37947816122323275
+time for setting up halos: 13.663925459608436
+time for compilation: 1.6634986139833927
+time for model run: 172.11433837655932
+time for finalizing: 12.122289105318487
+
+======================================================================
+  benchmark results on device 4
+======================================================================
+
+time for imports and jax initialization: 10.073584163561463
+time for setting up sharding: 0.392893273383379
+time for setting up halos: 13.662659933790565
+time for compilation: 1.664897508919239
+time for model run: 172.11442175880075
+time for finalizing: 12.122341025620699
+
+======================================================================
+  benchmark results on device 13
+======================================================================
+
+time for imports and jax initialization: 10.085499016568065
+time for setting up sharding: 0.3811956122517586
+time for setting up halos: 13.661894195713103
+time for compilation: 1.6654982259497046
+time for model run: 172.11429101694375
+time for finalizing: 12.122259385883808
+
+********************************************************************************
+*                                                                              *
+*  This is the automated job summary provided by DKRZ.                         *
+*  If you encounter problems, need assistance or have any suggestion, please   *
+*  write an email to                                                           *
+*                                                                              *
+*  --  support@dkrz.de --                                                      *
+*                                                                              *
+*                       We hope you enjoyed the DKRZ supercomputer LEVANTE ... *
+*
+* JobID            : 21973711
+* JobName          : 128_16x1                                          
+* Account          : bk1377
+* User             : a270230 (275572), ab0995 (1221)                   
+* Partition        : compute
+* QOS              : normal
+* Nodelist         : l40095 (1)                                                
+* Submit date      : 2026-01-13T15:46:25
+* Start time       : 2026-01-13T15:47:21
+* End time         : 2026-01-13T15:51:00
+* Elapsed time     : 00:03:39 (Timelimit=00:30:00)                     
+* Command          : /home/a/a270230/veris_paper/veris_minimum_working_example/
+*                    run_files/job_cpu_128_16x1.sh
+* WorkDir          : /home/a/a270230/veris_paper/veris_minimum_working_example
+*
+* StepID | JobName      NodeHours    MaxRSS [Byte] (@task)
+* ------------------------------------------------------------------------------
+* 0      | python           0.059              763720K (1)
+* batch  | batch            0.061
+* extern | extern           0.061                3816K (0)
+* ------------------------------------------------------------------------------
+

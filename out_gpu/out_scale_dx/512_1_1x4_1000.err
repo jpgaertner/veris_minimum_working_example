@@ -1,0 +1,12 @@
+W0113 15:56:36.458430 3210623 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugonly   job_name: "jax_worker" task_id: 1: CANCELLED: CANCELLED
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_message:"CANCELLED", grpc_status:1} [type.googleapis.com/tensorflow.DerivedStatus='']
+W0113 15:56:36.458522 3210624 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugproto  job_name: "jax_worker": CANCELLED: CANCELLED
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_status:1, grpc_message:"CANCELLED"} [type.googleapis.com/tensorflow.DerivedStatus='']
+W0113 15:56:36.458490 3210626 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugstr   job_name: "jax_worker" task_id: 3: CANCELLED: CANCELLED
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_status:1, grpc_message:"CANCELLED"} [type.googleapis.com/tensorflow.DerivedStatus='']
+W0113 15:56:36.458601 3210625 pjrt_client.cc:1480] WatchJobStateAsync failed for task goo.gle/debugonly  job_name: "jax_worker" task_id: 2: UNAVAILABLE: failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.48:12345: Failed to connect to remote host: Connection refused
+Additional GRPC error information from remote target coordination_service while calling /tensorflow.CoordinationService/WatchJobState:
+:UNKNOWN:Error received from peer  {grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:10.5.0.48:12345: Failed to connect to remote host: Connection refused", grpc_status:14}
