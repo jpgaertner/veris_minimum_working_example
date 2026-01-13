@@ -4,15 +4,13 @@ from veris.variables import variables
 from veris.settings import settings
 
 
-grid_len = 3072
+grid_len = 1024
 nx, ny = grid_len, grid_len
 
 use_circular_overlap = False
-# use this to verify the correctness of the translation,
-# this (True) will produce the same result as the MITgcm.
-# use this only for single-process simulations.
-######## if you use this, you also have to set #
-# use_sharding = False in veris.settings #######
+'''use this for running veris in a jupyter notebook
+(run_dyn.ipynb). if you use this, you also have to
+set use_sharding = False in veris.settings'''
 if use_circular_overlap:
     olx, oly = 2, 2
 else:
@@ -123,7 +121,7 @@ if variableWindField:
         mx = -oLx+(2*oLx+Lx)*tP
         my = -oLy+(2*oLy+Ly)*tP
 
-    alpha0= jnp.pi/2. - jnp.pi/2./5. # 90 grad ist ohne Konvergenz oder Divergenz
+    alpha0= jnp.pi/2. - jnp.pi/2./5. # 90 degrees is without convergence or divergence
     alpha = jnp.pi/2. - jnp.pi/2./5.*jnp.maximum(jnp.sign(jnp.roll(mx,-1)-mx),0.) \
             -jnp.pi/2./10.*jnp.maximum(jnp.sign(mx-jnp.roll(mx,-1)),0.)
 
@@ -198,8 +196,8 @@ def set_inits(vs):
 
     #hIceMean  = hice
     hIceMean  = ones2d * 0.3
-    hSnowMean = ones2d * 0
-    Area      = ones2d * 1
+    hSnowMean = ones2d * 0.0
+    Area      = ones2d * 1.0
     TSurf     = ones2d * 273.0
     
     uWind  = createfrom(uwind[15,:,:])
@@ -217,20 +215,20 @@ def set_inits(vs):
     
     uOcean = createfrom(uo) * maskInU
     vOcean = createfrom(vo) * maskInV
-    
+
     R_low = createfrom(h)
 
-    fcormax = 0.0001562
-    fcormin = 0.00014604
+    fcormin = 1.4604e-4
+    fcormax = 1.4596e-4 + 8.0e-8 * grid_len
     y = jnp.linspace(fcormin, fcormax, grid_len)
     y = y[:,jnp.newaxis] * jnp.ones((grid_len,grid_len))
     fCori = createfrom(y)
     #fCori = createfrom(1.46e-4)
-    fCori = ones2d * 0
+    #fCori = ones2d * 0
 
     iceMask, iceMaskU, iceMaskV  = maskInC, maskInU, maskInV
 
-    deltaX = ones2d * 8000
+    deltaX = ones2d * dx
     dxC, dyC, dxG, dyG, dxU, dyU, dxV, dyV = [deltaX for _ in range(8)]
     recip_dxC, recip_dyC, recip_dxG, recip_dyG, \
     recip_dxU, recip_dyU, recip_dxV, recip_dyV = [1 / deltaX for _ in range(8)]
@@ -268,19 +266,22 @@ vs = set_inits(vs)
 
 # use these settings for the benchmark
 deltat = 600
+''' defaults in the mitgcm benchmark:
+deltaX = ones2d * 8000
+'evpAlpha'             : 123456.7,
+'evpBeta'              : 123456.7,
+'''
 input_settings = {
             'deltatTherm'          : deltat,
             'recip_deltatTherm'    : 1 / deltat,
             'deltatDyn'            : deltat,
             'recip_deltatDyn'      : 1 / deltat,
-            'gridcellWidth'        : 8000,
-            'use_circular_overlap' : use_circular_overlap,
             'useEVP'               : True,
             'useFreedrift'         : False,
             'useAdaptiveEVP'       : True,
             'useRelativeWind'      : False,
-            'evpAlpha'             : 123456.7,
-            'evpBeta'              : 123456.7,
+            'evpAlpha'             : 500,
+            'evpBeta'              : 500,
             'nEVPsteps'            : 120,
         }
 sett.add(input_settings)
