@@ -1,17 +1,14 @@
+#!/usr/bin/env bash
 
 # settings
-gpu_grids=("(1, 32)" "(1, 64)")
-max_gpus_per_node=4
-grid_lens=(5120)
-n_timesteps=20
+gpu_grids=("(1, 4)")
+max_tasks_per_node=4
+grid_lens=(128 256 512 1024)
+n_timesteps=1000
 mem="480GB"
 time="0:10:00"
 
-# use 100Gb memory for the 3072 grid, 200Gb for the 5120 grid
 
-# the only thing that is to be changed in the rest of this script is
-# --ntasks-per-node and --cpus-per-task
-# (only do this if you want to switch to single-task runs)
 ####################################################################
 
 sed -i "s|\(n_timesteps = \).*|\1$n_timesteps|" run_parallel.py
@@ -40,15 +37,14 @@ for grid_len in "${grid_lens[@]}"; do
         sed -i "s|.*\(SCRIPT=\).*|\1run_files/run_parallel_gpu_${grid_len}_${n_gpus_y}x${n_gpus_x}.py|" job_gpu.sh
 
         # set number of nodes and gpus per node
-        nodes=$(( n_gpus > max_gpus_per_node ? n_gpus / max_gpus_per_node : 1 ))
-        gpus_per_node=$(( n_gpus > max_gpus_per_node ? max_gpus_per_node : n_gpus ))
-        cpus_per_task=$(( gpus_per_node * 4 ))
+        nodes=$(( n_gpus > max_tasks_per_node ? n_gpus / max_tasks_per_node : 1 ))
+        tasks_per_node=$(( n_gpus > max_tasks_per_node ? max_tasks_per_node : n_gpus ))
+        cpus_per_task=$(( tasks_per_node * 4 )) # use this only for single-task runs (see below)
         sed -i "s|\(#SBATCH --nodes=\).*|\1$nodes|" job_gpu.sh
-        sed -i "s|\(#SBATCH --ntasks-per-node=\).*|\1$gpus_per_node|" job_gpu.sh
-        #sed -i "s|\(#SBATCH --ntasks-per-node=\).*|\11|" job_gpu.sh
+        sed -i "s|\(#SBATCH --ntasks-per-node=\).*|\1$tasks_per_node|" job_gpu.sh
         sed -i "s|\(#SBATCH --cpus-per-task=\).*|\14|" job_gpu.sh
         #sed -i "s|\(#SBATCH --cpus-per-task=\).*|\1$cpus_per_task|" job_gpu.sh
-        sed -i "s|\(#SBATCH --gres=gpu:a100_80:\).*|\1$gpus_per_node|" job_gpu.sh
+        sed -i "s|\(#SBATCH --gres=gpu:a100_80:\).*|\1$tasks_per_node|" job_gpu.sh
 
         # set name of job and output files
         output_file="${grid_len}_${nodes}_${n_gpus_y}x${n_gpus_x}_$n_timesteps"

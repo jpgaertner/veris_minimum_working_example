@@ -1,23 +1,17 @@
+#!/usr/bin/env bash
 
 # settings
-proc_grids=("(16 ,1)" "(32, 1)" "(4, 4)" "(1, 16)" "(1, 32)")
-max_proc_per_node=8
+proc_grids=("(16, 1)")
+max_tasks_per_node=128
 cpus_per_task=1
-grid_lens=(3072)
-n_timesteps=20
+grid_lens=(128 256)
+n_timesteps=1000
 mem="480GB"
-time="2:00:00"
+time="0:30:00"
 
-# check whether mem or mem-per-cpu is used!
 
-# on (1, 1):
-# mem = 100GB picks 26 cpu per task, mem=480 picks 125 cpus per task.
-# this overwrites my slurm settings!
-# only if i dont specifiy the memory, my --cpus-per-task is used
-#1024_1_1x1_10.log_6 was done with cpus_per_task=1, --mem-per-cpu=20GB
-
-#use max_proc_per_node smaller 32 for the 3072 grid
-##########
+#use max_tasks_per_node=16 or smaller for the 3072 grid
+####################################################################
 
 # apply timesteps, processor type and allocated memory
 sed -i "s|\(n_timesteps = \).*|\1$n_timesteps|" run_parallel.py
@@ -47,13 +41,14 @@ for grid_len in "${grid_lens[@]}"; do
         sed -i "s|.*\(SCRIPT=\).*|\1run_files/run_parallel_cpu_${grid_len}_${nproc_y}x${nproc_x}.py|" job_cpu.sh
 
         # set number of nodes and processors
-        nodes=$(( nproc > max_proc_per_node ? nproc / max_proc_per_node : 1 ))
-        proc_per_node=$(( nproc > max_proc_per_node ? max_proc_per_node : nproc ))
+        # (use the commented lines only for single task runs)
+        nodes=$(( nproc > max_tasks_per_node ? nproc / max_tasks_per_node : 1 ))
+        tasks_per_node=$(( nproc > max_tasks_per_node ? max_tasks_per_node : nproc ))
         sed -i "s|\(#SBATCH --nodes=\).*|\1$nodes|" job_cpu.sh
-        sed -i "s|\(#SBATCH --ntasks-per-node=\).*|\1$proc_per_node|" job_cpu.sh
+        sed -i "s|\(#SBATCH --ntasks-per-node=\).*|\1$tasks_per_node|" job_cpu.sh
         #sed -i "s|\(#SBATCH --ntasks-per-node=\).*|\11|" job_cpu.sh
         sed -i "s|\(#SBATCH --cpus-per-task=\).*|\1$cpus_per_task|" job_cpu.sh
-        #sed -i "s|\(#SBATCH --cpus-per-task=\).*|\1$proc_per_node|" job_cpu.sh
+        #sed -i "s|\(#SBATCH --cpus-per-task=\).*|\1$tasks_per_node|" job_cpu.sh
 
         # set name of job and output files
         output_file="${grid_len}_${nodes}_${nproc_y}x${nproc_x}_$n_timesteps"
