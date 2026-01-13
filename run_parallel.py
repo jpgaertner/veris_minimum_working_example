@@ -10,7 +10,7 @@ from jax.lax import fori_loop
 from functools import partial
 
 import sys, os
-sys.path.append(os.path.expanduser('~/veris_minimum_working_example'))
+sys.path.append(os.path.expanduser('~/veris_paper/veris_minimum_working_example'))
 import initialize_mesh_sharding
 
 
@@ -18,7 +18,7 @@ import initialize_mesh_sharding
 
 # define dimensions of the processor mesh. this determines
 # how devices are logically arranged for sharding
-pdims = (1, 32)
+pdims = (1, 4)
 
 # sets up distributed communication if running on multiple tasks
 initialize_mesh_sharding.initialize(pdims)
@@ -34,7 +34,7 @@ from veris.ocean_stress import OceanStressUV
 from veris.advection import Advection
 from veris.clean_up import clean_up_advection, ridging
 from veris.fill_overlap import fill_overlap
-from initialize_dyn_3072 import vs, sett
+from initialize_dyn_1024 import vs, sett
 
 t2 = perf_counter()
 
@@ -165,7 +165,7 @@ jax.block_until_ready(dump)
 
 t5 = perf_counter()
 
-n_timesteps = 20
+n_timesteps = 1000
 for i in range(n_timesteps):
     vs = dyn_model(vs, sett)
 
@@ -260,5 +260,5 @@ print('time for compilation:', t5 - t4)
 print('time for model run:', t6 - t5)
 print('time for finalizing:', t7 - t6)
 
-output_path = 'out_cpu/out/'
-#jnp.save(f'{output_path}file_{vs.hIceMean.shape[0]}_{pdims[0]}x{pdims[1]}.npy', [vs.hIceMean, vs.hSnowMean, vs.Area, vs.uIce, vs.vIce, vs.uWind, vs.vWind, vs.uOcean, vs.vOcean])
+output_path = 'out_gpu/out/'
+jnp.save(f'{output_path}file_{vs.hIceMean.shape[0]}_{pdims[0]}x{pdims[1]}_{n_timesteps}.npy', [vs.hIceMean, vs.Area, vs.hSnowMean, vs.uIce, vs.vIce, vs.uWind, vs.vWind, vs.uOcean, vs.vOcean])
