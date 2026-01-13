@@ -5,7 +5,7 @@ from veris.variables import VARIABLES
 from veris.settings import SETTINGS
 
 
-grid_len = 128
+grid_len = 256
 nx, ny = grid_len, grid_len
 olx, oly = 2, 2
 
@@ -110,9 +110,6 @@ def fill_overlap(A):
 
 ones2d = npx.ones((grid_len+4,grid_len+4))
 
-def create(val):
-    return ones2d * val
-
 def createfrom(field):
     field_full_size = ones2d * 1
     field_full_size = update(field_full_size, at[2:-2,2:-2], field)
@@ -125,15 +122,15 @@ def set_inits(state):
     vs = state.variables
 
     #vs.hIceMean  = createfrom(hice)
-    hIceMean  = create(0.3)
-    hSnowMean = create(0)
-    Area      = create(1)
-    TSurf     = create(273.0)
+    hIceMean  = ones2d * 0.3
+    hSnowMean = ones2d * 0
+    Area      = ones2d * 1
+    TSurf     = ones2d * 273.0
     
     uWind  = createfrom(uwind[15,:,:])
     vWind  = createfrom(vwind[15,:,:])
     
-    maskInC = create(1)
+    maskInC = ones2d * 1
     maskInC = update(maskInC, at[-3,:], 0)
     maskInC = update(maskInC, at[:,-3], 0)
     maskInU = maskInC * npx.roll(maskInC,5,axis=1)
@@ -148,17 +145,18 @@ def set_inits(state):
     
     R_low = createfrom(h)
 
-    fcormax = 0.0001562
-    fcormin = 0.00014604
+    fcormin = 1.4604e-4
+    fcormax = 1.4596e-4 + 8.0e-8 * grid_len
     y = npx.linspace(fcormin, fcormax, grid_len)
     y = y[:,npx.newaxis] * npx.ones((grid_len,grid_len))
     fCori = createfrom(y)
-    #vs.fCori = create(1.46e-4)
-    fCori = create(0)
+    #fCori = createfrom(1.46e-4)
+    #fCori = ones2d * 0
 
     iceMask, iceMaskU, iceMaskV  = maskInC, maskInU, maskInV
 
-    deltaX = create(8000)
+    #deltaX = ones2d * 8000
+    deltaX = createfrom(dx)
     dxC, dyC, dxG, dyG, dxU, dyU, dxV, dyV = [deltaX for _ in range(8)]
     recip_dxC, recip_dyC, recip_dxG, recip_dyG, \
     recip_dxU, recip_dyU, recip_dxV, recip_dyV = [1 / deltaX for _ in range(8)]
@@ -195,20 +193,26 @@ state = VerosState(VARIABLES, SETTINGS, dimensions)
 state.initialize_variables()
 set_inits(state)
 
-deltat = 3600
+# this updates the settings for the benchmark
+deltat = 600
+''' defaults in the mitgcm benchmark:
+deltaX = ones2d * 8000
+'evpAlpha'             : 123456.7,
+'evpBeta'              : 123456.7,
+'''
 input_settings = {
-            'deltatTherm'       : deltat,
-            'recip_deltatTherm' : 1 / deltat,
-            'deltatDyn'         : deltat,
-            'recip_deltatDyn'   : 1 / deltat,
-            'gridcellWidth'     : 8000,
-            'veros_fill'        : False,
-            'useEVP'            : True,
-            'useAdaptiveEVP'    : True,
-            'useRelativeWind'   : False,
-            'evpAlpha'          : 123456.7,
-            'evpBeta'           : 123456.7,
-            'nEVPsteps'         : 400
+            'deltatTherm'          : deltat,
+            'recip_deltatTherm'    : 1 / deltat,
+            'deltatDyn'            : deltat,
+            'recip_deltatDyn'      : 1 / deltat,
+            'veros_fill'           : False,
+            'useEVP'               : True,
+            'useFreedrift'         : False,
+            'useAdaptiveEVP'       : True,
+            'useRelativeWind'      : False,
+            'evpAlpha'             : 500,
+            'evpBeta'              : 500,
+            'nEVPsteps'            : 120,
         }
 
 with state.settings.unlock():
