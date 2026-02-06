@@ -5,7 +5,7 @@ from veris.variables import VARIABLES
 from veris.settings import SETTINGS
 
 
-grid_len = 256
+grid_len = 4096
 nx, ny = grid_len, grid_len
 olx, oly = 2, 2
 
